@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub Community</title>
+    <style>
+        :root {
+            --dark-nav: #0f172a;
+            --hero-purple: #4c1d95;
+            --accent-green: #22c55e;
+            --bg-light: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --blue-btn: #2563eb;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            background: var(--dark-nav);
+            color: white;
+            padding: 0.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links { display: none; } /* Hidden on mobile by default */
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a.active, .nav-links a:hover { color: white; }
+
+        .mobile-toggle {
+            display: block;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: var(--hero-purple);
+            color: white;
+            padding: 2.5rem 5%;
+            display: flex;
+            flex-direction: column; /* Stacked for mobile */
+            gap: 30px;
+            text-align: center;
+        }
+
+        .hero-text h1 { font-size: 1.8rem; margin-bottom: 10px; line-height: 1.2; }
+        .hero-btns { display: flex; flex-direction: column; gap: 10px; }
+        
+        .btn-green, .btn-outline { 
+            padding: 12px 24px; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn-green { background: var(--accent-green); border: none; color: white; }
+        .btn-outline { background: transparent; border: 1px solid white; color: white; }
+
+        .stats { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-box h2 { margin: 0; font-size: 1.2rem; }
+        .stat-box p { margin: 0; font-size: 0.7rem; color: #cbd5e1; }
+
+        /* --- Layout Grid --- */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column for mobile */
+            gap: 20px;
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 0; /* Handled by grid gap */
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* --- Feed Styling --- */
+        .feed-tabs { 
+            display: flex; 
+            gap: 15px; 
+            border-bottom: 1px solid var(--border); 
+            margin-bottom: 20px;
+            overflow-x: auto; /* Scrollable tabs on small screens */
+            white-space: nowrap;
+        }
+        .feed-tabs::-webkit-scrollbar { display: none; }
+        
+        .feed-tabs span { padding: 10px 5px; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); }
+        .feed-tabs span.active { color: var(--blue-btn); border-bottom: 2px solid var(--blue-btn); font-weight: 600; }
+
+        .post-box { display: flex; gap: 12px; margin-bottom: 25px; }
+        .post-avatar { width: 40px; height: 40px; background: #cbd5e1; border-radius: 8px; flex-shrink: 0; }
+        .post-title { font-weight: 700; margin: 5px 0; font-size: 0.95rem; line-height: 1.4; }
+        .post-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+        
+        .tag-pill { font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; color: white; margin-left: 5px; vertical-align: middle; }
+        .tag-strategy { background: #6366f1; }
+        .tag-achievement { background: #22c55e; }
+
+        .premium-card { background: #2563eb; color: white; }
+        .premium-card button { 
+            width: 100%; background: white; color: #2563eb; border: none; 
+            padding: 12px; border-radius: 6px; font-weight: bold; margin-top: 15px; 
+        }
+
+        /* --- Footer --- */
+        footer { background: #020617; color: #94a3b8; padding: 3rem 5%; margin-top: 3rem; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .footer-col h4 { color: white; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; padding: 0; line-height: 2.2; font-size: 0.85rem; }
+
+        /* --- DESKTOP QUERIES (PC) --- */
+        @media (min-width: 1024px) {
+            .mobile-toggle { display: none; }
+            .nav-links { display: block; }
+            
+            .hero { flex-direction: row; text-align: left; padding: 4rem 10%; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-btns { flex-direction: row; }
+            .btn-green, .btn-outline { width: auto; }
+            
+            .stats { border: none; padding: 0; gap: 50px; }
+            .stat-box h2 { font-size: 2rem; }
+            
+            .main-container { 
+                grid-template-columns: 260px 1fr 300px; 
+                gap: 30px; 
+                padding: 0 5%;
+            }
+
+            .footer-grid { grid-template-columns: repeat(4, 1fr); }
+            
+            /* Order sidebars for desktop */
+            .left-sidebar { order: 1; }
+            .main-content { order: 2; }
+            .right-sidebar { order: 3; }
+        }
+
+        /* Mobile Order Adjustment */
+        @media (max-width: 1023px) {
+            .left-sidebar { order: 2; }
+            .main-content { order: 1; }
+            .right-sidebar { order: 3; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><strong>GameHub</strong></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#" class="active">Community</a>
+            <a href="#">Games</a>
+            <a href="#">Tournaments</a>
+            <a href="#">Shop</a>
+        </div>
+        <div class="mobile-toggle">☰</div>
+        <button class="profile-btn" style="background: var(--blue-btn); border:none; color:white; padding: 8px 16px; border-radius: 6px; cursor:pointer;">Profile</button>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text">
+            <h1>Join the Ultimate Gaming Community</h1>
+            <p>Connect with 2M+ gamers worldwide</p>
+            <div class="hero-btns">
+                <button class="btn-green">Join Now</button>
+                <button class="btn-outline">Explore Communities</button>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-box"><h2>2M+</h2><p>Members</p></div>
+            <div class="stat-box"><h2>15K</h2><p>Online Now</p></div>
+            <div class="stat-box"><h2>500+</h2><p>Games</p></div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <aside class="left-sidebar">
+            <div class="card">
+                <h3>Trending Games</h3>
+                <p><small>Battle Arena (45.2K playing)</small></p>
+                <p><small>Space Raiders (32.1K playing)</small></p>
+                <p><small>Racing Pro (28.5K playing)</small></p>
+            </div>
+            <div class="card">
+                <h3>Upcoming Events</h3>
+                <p><strong>Summer Championship</strong><br><small>Tomorrow, 3:00 PM</small></p>
+            </div>
+        </aside>
+
+        <section class="main-content">
+            <div class="card">
+                <div class="feed-tabs">
+                    <span class="active">Discussions</span>
+                    <span>Guides</span>
+                    <span>Streams</span>
+                    <span>Clips</span>
+                </div>
+
+                <div class="post-box" style="border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 30px;">
+                    <div class="post-avatar"></div>
+                    <input type="text" placeholder="Share your thoughts..." style="flex-grow:1; border:none; outline:none; font-size: 0.9rem;">
+                    <button style="background:var(--blue-btn); color:white; border:none; border-radius:4px; padding: 5px 12px; font-size:0.8rem;">Post</button>
+                </div>
+
+                <div class="post-box">
+                    <div class="post-avatar"></div>
+                    <div class="post-content">
+                        <div class="post-meta">ProGamer123 • 3h ago <span class="tag-pill tag-strategy">Strategy</span></div>
+                        <div class="post-title">Best loadout for Battle Arena Season 5?</div>
+                        <div class="post-body">Hey everyone! I've been experimenting with different loadouts and wanted to share my findings on the meta...</div>
+                    </div>
+                </div>
+
+                <div class="post-box">
+                    <div class="post-avatar"></div>
+                    <div class="post-content">
+                        <div class="post-meta">NinjaWarrior • 5h ago <span class="tag-pill tag-achievement">Achievement</span></div>
+                        <div class="post-title">Finally hit Diamond rank! 🎮</div>
+                        <div class="post-body">After 3 months of grinding, I finally made it! Here is the screenshot of my final match stats.</div>
+                        <div style="height: 180px; background: #e2e8f0; margin-top: 15px; border-radius: 8px; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.8rem;">[Game Screenshot]</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="right-sidebar">
+            <div class="card">
+                <h3>Recent Activity</h3>
+                <p><small><strong>Alex99</strong> earned Diamond Badge</small></p>
+                <p><small><strong>SarahG</strong> started playing Space Raiders</small></p>
+            </div>
+
+            <div class="card premium-card">
+                <h3>Premium Benefits</h3>
+                <ul style="font-size: 0.8rem; padding-left: 15px; margin: 10px 0;">
+                    <li>Ad-free experience</li>
+                    <li>Exclusive tournaments</li>
+                    <li>Custom profile themes</li>
+                </ul>
+                <button>Upgrade Now</button>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.2rem;">GameHub</h4>
+                <p>Connecting the world through gaming.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <ul><li>Forums</li><li>Discord</li><li>Reddit</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul><li>Help Center</li><li>Contact</li><li>Rules</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Newsletter</h4>
+                <div style="display:flex; gap:5px;">
+                    <input type="email" placeholder="Your email" style="background:#1e293b; border:none; padding:10px; color:white; border-radius:4px; width: 100%;">
+                    <button style="background:var(--blue-btn); color:white; border:none; padding:10px; border-radius:4px;">➜</button>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid #1e293b; font-size:0.8rem;">
+            &copy; 2026 GameHub Community. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

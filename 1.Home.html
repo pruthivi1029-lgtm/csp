@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gamer's HUB | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #0b141a;
+            --nav-bg: #121c24;
+            --footer-bg: #0d161d;
+            --accent-blue: #3b82f6;
+            --text-white: #ffffff;
+            --text-gray: #dddddd;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background-color: var(--nav-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+
+        .nav-center ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-center a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-center a:hover {
+            color: var(--text-white);
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 40px;
+        }
+        .k {text-align: left ;}
+
+        /* --- HERO SLIDER --- */
+        .hero-container {
+            position: relative;
+            height: 80vh;
+            /* Responsive height */
+            min-height: 400px;
+            width: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0b141a 100%);
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .slide.active {
+            display: flex;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .slide img {
+            max-width: 80%;
+            max-height: 50%;
+            object-fit: contain;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+        }
+
+        .slide h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            /* Fluid typography */
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .btn-learn {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 12px 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn-learn:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .dot {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: var(--accent-blue);
+        }
+
+        /* --- FEATURES --- */
+        .features {
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #ffffff;
+            color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-header {
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .header-blue {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .header-purple {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        }
+
+        .header-orange {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .card-body h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card-body p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 60px 5% 30px;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        .footer-col a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .footer-col li:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 900px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-center {
+                display: none;
+                /* Hidden by default on mobile */
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                padding: 20px;
+                border-bottom: 1px solid #1e293b;
+            }
+
+            .nav-center.active {
+                display: block;
+            }
+
+            .nav-center ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .nav-right {
+                display: none;
+            }
+
+            /* Hide search/sign-in on small mobile for space */
+
+            .hero-container {
+                height: 60vh;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>THE GAMER'S HUB</span>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-center" id="navMenu">
+            <ul>
+                
+                <li><a href="2.Game_tab.html">Games</a></li>
+                <li><a href="4.Store.html">Store</a></li>
+                <li><a href="6.community.html">Community</a></li>
+                <li><a href="3.News%20tab.html">News</a></li>
+                <li><a href="25.Rewords%20tab.html">Rewards</a></li>
+                <li><a href="26.0Help.html">Help</a></li>
+                <li>
+                    <span style="background-color: aqua ;border-radius:  20px" >SIGN IN</span> <li/><li>        
+                    <span style="padding-left: 0px"><i class="fa-solid fa-magnifying-glass"></i></span>
+                
+                </li>
+            </ul>
+        </div>
+        
+
+        
+    </nav>
+
+    <section class="hero-container">
+        <div class="slide active">
+            <img src="https://via.placeholder.com/800x400/3b82f6/ffffff?text=DESTINY+2" alt="Destiny 2">
+            <h1>DESTINY 2</h1>
+            <a href="#" class="btn-learn">LEARN MORE</a>
+        </div>
+        <div class="slide">
+            <img src="https://via.placeholder.com/800x400/8b5cf6/ffffff?text=BLACK+OPS+7" alt="Black Ops 7">
+            <h1>BLACK OPS 7</h1>
+            <a href="#" class="btn-learn">LEARN MORE</a>
+        </div>
+        <div class="slide">
+            <img src="https://via.placeholder.com/800x400/f97316/ffffff?text=HALO+REACH" alt="Halo Reach">
+            <h1>HALO REACH</h1>
+            <a href="#" class="btn-learn">LEARN MORE</a>
+        </div>
+
+        <div class="slider-nav">
+            <div class="dot active" onclick="currentSlide(0)"></div>
+            <div class="dot" onclick="currentSlide(1)"></div>
+            <div class="dot" onclick="currentSlide(2)"></div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="card">
+            <div class="card-header header-blue">
+                <i class="fa-solid fa-bolt fa-4x"></i>
+            </div>
+            <div class="card-body">
+                <h3>What's new?</h3>
+                <p>Discover new destinations and face powerful enemies in epic battles across the solar system.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header header-purple">
+                <i class="fa-solid fa-download fa-4x"></i>
+            </div>
+            <div class="card-body">
+                <h3>Downloads</h3>
+                <p>Get the latest patches and expansions. High-speed servers ready for your next adventure.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header header-orange">
+                <i class="fa-solid fa-trophy fa-4x"></i>
+            </div>
+            <div class="card-body">
+                <h3>Leaderboards</h3>
+                <p>Track your stats, earn unique banners, and see how you rank against the global community.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About</h4>
+                <ul>
+                    <li>Company</li>
+                    <li>Careers</li>
+                    <li>Press</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li>Feedback</li>
+                    <li>Contact Us</li>
+                    <li>Forums</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li>Privacy Policy</li>
+                    <li>Terms of Use</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <ul style="display: flex; gap: 15px;">
+                    <li><i class="fa-brands fa-twitter"></i></li>
+                    <li><i class="fa-brands fa-facebook"></i></li>
+                    <li><i class="fa-brands fa-instagram"></i></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 The Gamers HUB Inc. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlides(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+
+            slides[n].classList.add('active');
+            dots[n].classList.add('active');
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides(slideIndex);
+        }
+
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        setInterval(() => {
+            slideIndex = (slideIndex + 1) % slides.length;
+            showSlides(slideIndex);
+        }, 5000);
+    </script>
+</body></html>

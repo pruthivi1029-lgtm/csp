@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Core | The Gamer's HUB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- GAMER'S HUB THEME VARIABLES --- */
+        :root {
+            --dark-bg: #0b141a;
+            --nav-bg: #121c24;
+            --footer-bg: #0d161d;
+            --accent-blue: #3b82f6;
+            --accent-red: #ef4444; /* Added for "Sonic" vibes */
+            --text-white: #ffffff;
+            --text-gray: #dddddd;
+            --card-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION (Matches Home Page) --- */
+        nav {
+            background-color: var(--nav-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+
+        .nav-center ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-center a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .nav-center a:hover { color: var(--text-white); }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 60px 5%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0b141a 100%);
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-images {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .main-img-placeholder {
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 1/1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .hero-content { flex: 1.2; min-width: 300px; }
+        .hero-content h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text-white); margin-bottom: 10px; }
+        .hero-content p { color: var(--text-gray); margin-bottom: 20px; }
+
+        .btn-action {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 12px 40px;
+            border: none;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
+
+        /* --- PRODUCT GRIDS --- */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-blue);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 0 5% 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: var(--nav-bg);
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .product-card:hover { transform: translateY(-10px); border-color: var(--accent-blue); }
+
+        .prod-img {
+            height: 200px;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .prod-info { padding: 20px; }
+        .prod-info h4 { margin-bottom: 10px; font-size: 1.1rem; }
+        .price { color: var(--accent-blue); font-weight: bold; font-size: 1.2rem; }
+
+        .add-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover { background: var(--accent-blue); color: white; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-center {
+                display: none;
+                position: absolute;
+                top: 60px; left: 0; width: 100%;
+                background: var(--nav-bg);
+                padding: 20px;
+                border-bottom: 1px solid #1e293b;
+            }
+            .nav-center.active { display: block; }
+            .nav-center ul { flex-direction: column; align-items: center; }
+            .hero { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>THE GAMER'S HUB</span>
+        </div>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-center" id="navMenu">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Games</a></li>
+                <li><a href="#">Store</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">News</a></li>
+            </ul>
+        </div>
+
+        <div style="font-size: 0.9rem; color: var(--accent-blue);">
+            <i class="fa-solid fa-cart-shopping"></i> CART (0)
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-images">
+            <div class="main-img-placeholder">
+                <i class="fa-solid fa-robot fa-4x" style="color: var(--accent-blue)"></i>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>SONIC CORE FIGURES</h1>
+            <p>Premium collectible figures crafted with high-grade PVC and incredible attention to detail. Perfect for any collector's shelf.</p>
+            <div style="margin-bottom: 25px;">
+                <span class="price" style="font-size: 2rem;">$29.99</span>
+                <span style="text-decoration: line-through; color: #64748b; margin-left: 10px;">$39.99</span>
+            </div>
+            <button class="btn-action">Pre-Order Now</button>
+        </div>
+    </section>
+
+    <h2 class="section-title">Latest Drops</h2>
+    <div class="products-grid">
+        <div class="product-card">
+            <div class="prod-img"><i class="fa-solid fa-bolt"></i></div>
+            <div class="prod-info">
+                <h4>Shadow Collector's Edition</h4>
+                <div class="price">$24.99</div>
+                <button class="add-btn">ADD TO CART</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="prod-img"><i class="fa-solid fa-wind"></i></div>
+            <div class="prod-info">
+                <h4>Classic Sonic (1991)</h4>
+                <div class="price">$29.99</div>
+                <button class="add-btn">ADD TO CART</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="prod-img"><i class="fa-solid fa-hand-fist"></i></div>
+            <div class="prod-info">
+                <h4>Knuckles The Echidna</h4>
+                <div class="price">$34.99</div>
+                <button class="add-btn">ADD TO CART</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="prod-img"><i class="fa-solid fa-star"></i></div>
+            <div class="prod-info">
+                <h4>Ultimate Chaos Emerald Set</h4>
+                <div class="price">$89.99</div>
+                <button class="add-btn">ADD TO CART</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActionGames | Unleash Your Inner Warrior</title>
+    <style>
+        :root {
+            --dark-navy: #1a1c2c;
+            --brand-purple: #6366f1;
+            --feature-gradient: linear-gradient(135deg, #4f46e5, #9333ea);
+            --bg-light: #f8fafc;
+            --text-gray: #64748b;
+            --gold: #fbbf24;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: white;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            border-bottom: 1px solid #f1f5f9;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-weight: bold; color: var(--brand-purple); font-size: 1.4rem; cursor: pointer; }
+        
+        /* Nav Logic */
+        nav { display: none; } /* Hidden on mobile */
+        
+        .nav-desktop { display: flex; align-items: center; }
+        .nav-desktop a { margin: 0 15px; text-decoration: none; color: var(--text-gray); font-size: 0.9rem; transition: color 0.2s; }
+        .nav-desktop a:hover { color: var(--brand-purple); }
+
+        .btn-primary { 
+            background: var(--brand-purple); 
+            color: white; border: none; 
+            padding: 8px 20px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: block;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-navy);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--dark-navy);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center; /* Center on mobile */
+        }
+
+        .hero h1 { font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { color: #94a3b8; margin: 0 auto 2rem; line-height: 1.6; font-size: 1rem; }
+        .hero-btns { display: flex; flex-direction: column; gap: 15px; } /* Stack buttons on mobile */
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 1px solid white; 
+            color: white; 
+            padding: 12px 25px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            width: 100%;
+        }
+
+        /* --- Section Containers --- */
+        .section-container { padding: 3rem 5%; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .section-header h2 { font-size: 1.2rem; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- Responsive Game Grid --- */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns on small mobile */
+            gap: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .game-card { overflow: hidden; }
+        .game-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* X-Wireframe effect */
+        .game-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top right, transparent calc(50% - 1px), #e2e8f0, transparent calc(50% + 1px)),
+                        linear-gradient(to top left, transparent calc(50% - 1px), #e2e8f0, transparent calc(50% + 1px));
+        }
+
+        .game-info { padding: 10px 0; }
+        .game-title { font-weight: bold; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .game-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-gray); }
+
+        /* --- Featured Banner --- */
+        .featured-banner { background: var(--feature-gradient); padding: 3rem 5%; color: white; }
+        .featured-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column; /* Stacked for mobile */
+            gap: 20px;
+            padding: 1.5rem;
+        }
+
+        .featured-img { 
+            width: 100%; 
+            height: 180px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: 8px;
+            position: relative;
+        }
+
+        /* --- Stats Bar --- */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2x2 on mobile */
+            gap: 20px;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer { background: #0f172a; color: #94a3b8; padding: 3rem 5%; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column mobile */
+            gap: 30px;
+        }
+
+        /* --- DESKTOP REFINEMENTS (PC) --- */
+        @media (min-width: 768px) {
+            nav { display: block; }
+            .menu-toggle { display: none; }
+            
+            .hero { text-align: left; padding: 6rem 10%; }
+            .hero h1 { font-size: 3.5rem; }
+            .hero p { margin: 0 0 2rem; max-width: 600px; }
+            .hero-btns { flex-direction: row; }
+            .btn-outline { width: auto; }
+
+            .game-grid { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+            
+            .featured-card { flex-direction: row; padding: 3rem; max-width: 1000px; margin: 0 auto; align-items: center; }
+            .featured-img { width: 450px; height: 250px; }
+
+            .stats-bar { grid-template-columns: repeat(4, 1fr); padding: 4rem 10%; }
+            
+            .footer-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">ActionGames</div>
+        <nav class="nav-desktop">
+            <a href="#">Home</a>
+            <a href="#">Games</a>
+            <a href="#">Categories</a>
+            <a href="#">About</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="btn-primary">Play Now</button>
+            <div class="menu-toggle">☰</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Unleash Your<br>Inner Warrior</h1>
+        <p>Experience the most thrilling action titles. From tactical shooters to epic fantasy RPGs, your next adventure starts here.</p>
+        <div class="hero-btns">
+            <button class="btn-primary" style="padding: 15px 35px; font-size: 1rem;">Start Playing</button>
+            <button class="btn-outline">Browse Library</button>
+        </div>
+    </section>
+
+    <div class="section-container">
+        <div class="section-header">
+            <h2>Combat FPS</h2>
+            <a href="#" style="color: var(--brand-purple); text-decoration: none; font-size: 0.85rem;">View All →</a>
+        </div>
+        
+        <div class="game-grid">
+            <div class="game-card">
+                <div class="game-thumb"></div>
+                <div class="game-info">
+                    <div class="game-title">Combat Zone</div>
+                    <div class="game-meta"><span>FPS</span><span style="color:var(--gold)">★ 4.8</span></div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-thumb"></div>
+                <div class="game-info">
+                    <div class="game-title">Shadow Strike</div>
+                    <div class="game-meta"><span>FPS</span><span style="color:var(--gold)">★ 4.7</span></div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-thumb"></div>
+                <div class="game-info">
+                    <div class="game-title">Cyber Blast</div>
+                    <div class="game-meta"><span>Tactical</span><span style="color:var(--gold)">★ 4.9</span></div>
+                </div>
+            </div>
+            <div class="game-card">
+                <div class="game-thumb"></div>
+                <div class="game-info">
+                    <div class="game-title">Alpha Unit</div>
+                    <div class="game-meta"><span>FPS</span><span style="color:var(--gold)">★ 4.5</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="featured-banner">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="margin: 0; font-size: 1.5rem;">Game of the Month</h3>
+            <p style="opacity: 0.8;">The community's top pick for February</p>
+        </div>
+        
+        <div class="featured-card">
+            <div class="featured-img">
+                <div style="position: absolute; top: 10px; left: 10px; background: var(--gold); color: black; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold;">TRENDING</div>
+            </div>
+            <div class="featured-content">
+                <h2 style="margin-top: 0;">Apex Warriors</h2>
+                <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.9;">Master unique hero abilities in this fast-paced squad-based battle royale. Dominate the arena with tactical precision.</p>
+                <div style="margin: 15px 0; display: flex; gap: 10px;">
+                    <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 4px;">Multiplayer</span>
+                    <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 4px;">Competitive</span>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-primary" style="background: white; color: var(--brand-purple);">Play Free</button>
+                    <button class="btn-outline" style="padding: 8px 15px;">Trailer</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="stat-item"><h3>500+</h3><p>Games</p></div>
+        <div class="stat-item"><h3>10M+</h3><p>Players</p></div>
+        <div class="stat-item"><h3>24/7</h3><p>Support</p></div>
+        <div class="stat-item"><h3>4.8★</h3><p>Rating</p></div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="color: white; margin-bottom: 1rem;">ActionGames</div>
+                <p style="font-size: 0.8rem; line-height: 1.6;">The world's leading platform for premium action gaming experiences since 2021.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <ul><li>FPS Games</li><li>RPG Games</li><li>Fighting</li><li>Adventure</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul><li>Help Center</li><li>Community</li><li>System Requirements</li><li>Contact</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <div style="display: flex; gap: 15px; font-size: 1.2rem; cursor: pointer;">🕊️ 📷 📺 🎮</div>
+            </div>
+        </div>
+        <div style="text-align: center; font-size: 0.75rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #1e293b;">
+            &copy; 2026 ActionGames. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

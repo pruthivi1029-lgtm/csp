@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gamer's HUB - Recreation</title>
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --accent-red: #e11d48;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --sidebar-bg: #f8fafc;
+            --blue-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Header & Nav */
+        header {
+            background: var(--primary-bg);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-size: 1.2rem; white-space: nowrap; }
+
+        .nav-links { display: none; } /* Hidden on mobile by default */
+
+        .signin-btn {
+            background: #2563eb;
+            border: none;
+            padding: 8px 20px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: flex;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Breaking News Bar */
+        .breaking-bar {
+            background: var(--accent-red);
+            color: white;
+            padding: 10px 5%;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .breaking-tag { font-weight: bold; margin-right: 15px; white-space: nowrap; }
+
+        /* Main Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr; /* Stacked on mobile */
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 15px;
+        }
+
+        /* Featured Hero Section */
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .hero-img {
+            background: #cbd5e1;
+            height: 250px; /* Shorter on mobile */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #64748b;
+        }
+
+        .hero-content { padding: 1.5rem; }
+        .hero-content h1 { margin: 0.5rem 0; font-size: 1.4rem; line-height: 1.3; }
+        .tag { background: #f1f5f9; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; color: #6366f1; margin-right: 5px; display: inline-block; margin-bottom: 5px; }
+
+        /* Sidebar Elements */
+        .sidebar-box {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .trending-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            align-items: center;
+        }
+        .trending-num { font-weight: bold; color: #94a3b8; font-size: 1.2rem; }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        .newsletter {
+            background: var(--blue-gradient);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .newsletter input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 1 col mobile */
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
+        }
+
+        .news-img { height: 180px; background: #e2e8f0; }
+        .news-info { padding: 1rem; }
+        .news-info h3 { font-size: 1.1rem; margin: 0.5rem 0; }
+
+        /* Footer */
+        footer {
+            background: var(--primary-bg);
+            color: #94a3b8;
+            padding: 3rem 5% 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Stacked footer on mobile */
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.2rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; padding: 0; font-size: 0.9rem; line-height: 2.2; }
+
+        /* --- DESKTOP STYLES (PC) --- */
+        @media (min-width: 992px) {
+            header { padding: 1rem 10%; }
+            
+            .menu-toggle { display: none; }
+            
+            .nav-links { 
+                display: flex; 
+                gap: 25px;
+            }
+            .nav-links span { margin: 0; font-weight: 500; transition: 0.3s; }
+            .nav-links span:hover { color: #6366f1; }
+
+            .container {
+                grid-template-columns: 2.5fr 1fr; /* 2 Column layout for PC */
+                margin-top: 2rem;
+            }
+
+            .hero-img { height: 400px; }
+            .hero-content h1 { font-size: 2.2rem; }
+
+            .news-grid {
+                grid-template-columns: 1fr 1fr; /* 2 cards per row on PC */
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><strong>GAMER'S HUB</strong></div>
+        <nav>
+        <div class="nav-left">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>THE GAMER'S HUB</span>
+        </div>
+        
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-center" id="navMenu">
+            <ul>
+                <li><a href="2.Game_tab.html">Games</a></li>
+                <li><a href="4.a%20Store.html">Store</a></li>
+                <li><a href="6.a%20community.html">Community</a></li>
+                <li><a href="3.a%20News%20tab.html">News</a></li>
+                <li><a href="25.a%20Rewords%20tab.html">Rewards</a></li>
+                <li><a href="26.a%20Help.html">Help</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-right">
+            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+            <span>SIGN IN</span>
+        </div>
+    </nav>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="signin-btn">Sign In</button>
+            <div class="menu-toggle">☰</div>
+        </div>
+    </header>
+
+    <div class="breaking-bar">
+        <span class="breaking-tag">⚡ BREAKING:</span>
+        <span>New PlayStation 5 Pro announced with 8K gaming support... <a href="#" style="color:white; font-weight: bold;">Read more</a></span>
+    </div>
+
+    <main class="container">
+        <section>
+            <div class="hero-card">
+                <div class="hero-img">FEATURED STORY IMAGE</div>
+                <div class="hero-content">
+                    <span class="tag" style="background:var(--accent-red); color:white;">EXCLUSIVE</span>
+                    <h1>The Future of Gaming: How AI is Revolutionizing Game Development</h1>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Artificial intelligence is transforming every aspect of game creation, from procedural world-building to complex NPC social behaviors that react to player choices in real-time.</p>
+                    <div style="margin-top: 15px;">
+                        <span class="tag">AI</span><span class="tag">Technology</span><span class="tag">Industry</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2 style="margin-top: 3rem; border-left: 4px solid var(--accent-red); padding-left: 15px;">Latest News</h2>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-img"></div>
+                    <div class="news-info">
+                        <small style="color:var(--accent-red); font-weight:bold;">3 hours ago • Xbox</small>
+                        <h3>Xbox Game Pass Adds 5 New Titles This Week</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Explore the latest additions including high-octane racing and indie gems.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img"></div>
+                    <div class="news-info">
+                        <small style="color:var(--accent-red); font-weight:bold;">5 hours ago • Nintendo</small>
+                        <h3>Nintendo Direct Reveals Zelda Spin-Off</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">A surprise announcement takes fans back to the world of Hyrule in a new way.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside>
+            <div class="sidebar-box">
+                <h3 style="margin-top:0; font-size: 1.1rem; margin-bottom: 1.2rem;">Trending Now</h3>
+                <div class="trending-item">
+                    <span class="trending-num">01</span>
+                    <div>GTA VI Trailer Breaks Records on YouTube</div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-num">02</span>
+                    <div>Steam Autumn Sale: Best Deals Under $20</div>
+                </div>
+                <div class="trending-item">
+                    <span class="trending-num">03</span>
+                    <div>PlayStation Portal Review: The Verdict</div>
+                </div>
+            </div>
+
+            <div class="sidebar-box">
+                <h3 style="margin-top:0; font-size: 1.1rem; margin-bottom: 1.2rem;">Categories</h3>
+                <div class="category-item"><span>PC Gaming</span><span style="color:var(--text-muted)">142</span></div>
+                <div class="category-item"><span>Console</span><span style="color:var(--text-muted)">98</span></div>
+                <div class="category-item"><span>Mobile</span><span style="color:var(--text-muted)">67</span></div>
+                <div class="category-item"><span>Reviews</span><span style="color:var(--text-muted)">215</span></div>
+            </div>
+
+            <div class="newsletter">
+                <h3 style="margin-top:0;">Stay Updated</h3>
+                <p style="font-size: 0.9rem; opacity: 0.9;">The best gaming news delivered to your inbox weekly.</p>
+                <input type="email" placeholder="Enter your email">
+                <button class="signin-btn" style="width: 100%; background: white; color: #6366f1; font-weight: bold; padding: 12px;">Subscribe Now</button>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-weight: 800; letter-spacing: 1px;">GAMER'S HUB</h4>
+                <p style="line-height: 1.6;">Your ultimate source for gaming news, reviews, and professional industry insights. Built by gamers, for gamers.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul><li>Latest News</li><li>Game Reviews</li><li>Upcoming Releases</li><li>Hardware Tech</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Platforms</h4>
+                <ul><li>PC Gaming</li><li>PlayStation</li><li>Xbox</li><li>Nintendo Switch</li></ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul><li>About Us</li><li>Contact Support</li><li>Terms of Service</li><li>Privacy Policy</li></ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem; font-size: 0.75rem; border-top: 1px solid #1e293b; padding-top: 1.5rem; color: #475569;">
+            © 2026 The Gamer's HUB. Designed for all devices.
+        </div>
+    </footer>
+
+</body>
+</html>
